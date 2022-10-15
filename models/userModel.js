@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const { required } = require("joi");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -20,7 +19,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    unique: true,
     minlength: 5,
     maxlength: 255,
   },
@@ -39,4 +37,4 @@ const validate = (user) => {
 };
 
 module.exports.validate = validate;
-module.exports.UserModel = User;
+module.exports.User = User;

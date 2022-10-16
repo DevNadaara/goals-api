@@ -24,12 +24,22 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 255,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.methods.generateToken = function () {
   const token = jwt.sign(
-    { _id: this._id, name: this.name, email: this.email },
-    config.get("jwtPrivate")
+    {
+      _id: this._id,
+      username: this.username,
+      email: this.email,
+      isAdmin: this.isAdmin,
+    },
+    config.get("jwtPrivate"),
+    { expiresIn: "10d" }
   );
 
   return token;

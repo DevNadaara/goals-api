@@ -22,6 +22,31 @@ const register = async (req, res) => {
   res.header("x-auth-token", token).send(_.pick(user, ["username", "email"]));
 };
 
+const setUpdate = async (req, res) => {
+  // checking user
+
+  // hashed password
+  const salt = await bcryptjs.genSalt(10);
+  const hashed = await bcryptjs.hash(req.body.password, salt);
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      username: req.body.username,
+      email: req.body.email,
+      password: hashed,
+    },
+    { new: true }
+  );
+  if (!user) return res.status(404).send("user isnt found");
+};
+
+const getUsers = async (req, res) => {
+  const user = await User.find();
+  res.send(user);
+};
+
 module.exports = {
   register,
+  setUpdate,
+  getUsers,
 };

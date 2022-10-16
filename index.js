@@ -1,4 +1,5 @@
 const express = require("express");
+require("express-async-errors");
 const connectDB = require("./start/config");
 const users = require("./routes/user");
 

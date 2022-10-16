@@ -17,8 +17,9 @@ const register = async (req, res) => {
     email: req.body.email,
     password: hashed,
   });
+  const token = user.generateToken();
 
-  res.send(_.pick(user, ["username", "email"]));
+  res.header("x-auth-token", token).send(_.pick(user, ["username", "email"]));
 };
 
 module.exports = {

@@ -1,3 +1,4 @@
 {
-  "db": "mongodb+srv://nadaara:12345@cluster0.qllofdb.mongodb.net/goals?retryWrites=true&w=majority"
+  "db": "",
+  "jwtPrivate": "mySecure"
 }

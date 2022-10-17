@@ -5,6 +5,7 @@ const _ = require("lodash");
 const register = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(401).send("email already registered");
+
   user = await User.findOne({ username: req.body.username });
   if (user) return res.status(401).send("username already registered");
 
@@ -23,7 +24,9 @@ const register = async (req, res) => {
 };
 
 const setUpdate = async (req, res) => {
-  // checking user
+  //check is users are same
+  if (req.user._id !== req.params.id)
+    return res.status(403).send(" access not allowed");
 
   // hashed password
   const salt = await bcryptjs.genSalt(10);
@@ -45,8 +48,15 @@ const getUsers = async (req, res) => {
   res.send(user);
 };
 
+const getMe = async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  res.send(user);
+};
+
 module.exports = {
   register,
   setUpdate,
   getUsers,
+  getMe,
 };

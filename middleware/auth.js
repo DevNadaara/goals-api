@@ -7,9 +7,7 @@ module.exports = function (req, res, next) {
 
   try {
     const decoded = jwt.decode(token, config.get("jwtPrivate"));
-    //check is users are same
-    if (decoded._id !== req.params.id)
-      return res.status(403).send(" access not allowed");
+
     req.user = decoded;
     next();
   } catch (error) {

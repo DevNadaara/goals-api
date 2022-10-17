@@ -9,12 +9,14 @@ router.post("/", validator(validate), login);
 
 module.exports = router;
 
+//user inputs validation
+
 function validate(user) {
   const schema = Joi.object({
-    username: Joi.string().max(20).min(3).required(),
-    email: Joi.string().email().max(20).min(5).required(),
+    username: Joi.string().max(20).min(3),
+    email: Joi.string().email().max(20).min(5),
     password: Joi.string().max(20).min(5).required(),
-  });
+  }).xor("username", "email");
 
   return schema.validate(user);
 }
